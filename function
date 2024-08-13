@@ -1,0 +1,24 @@
+import pandas as pd
+
+def classify_columns(df, ratio_threshold=0.1):
+    column_types = {}
+    num_rows = len(df)
+
+    for col in df.columns:
+        # Calculate the number of unique values
+        unique_count = df[col].nunique()
+
+        # Determine if the column should be classified as categorical or numerical
+        if unique_count / num_rows <= ratio_threshold:
+            column_types[col] = 'Categorical'
+        else:
+            column_types[col] = 'Numerical'
+
+    # Print the classification of each column
+    for col, col_type in column_types.items():
+        print(f'{col} is {col_type}')
+        
+    return column_types
+
+# Example usage: assuming df is your DataFrame
+column_types = classify_columns(df)
